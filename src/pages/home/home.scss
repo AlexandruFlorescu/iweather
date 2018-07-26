@@ -1,5 +1,32 @@
 .home{
   background: color($colors, primary);
   color: color($colors, light);
-  margin-top: 30px;
+  margin-top: 3px;
+
+  .location{
+    font-weight: bold;
+    font-size: 150%;
+    color: color($colors, light);
+    border-bottom: 1px solid color($colors, light);
+  }
+  .icon{
+    width: 100px;
+    margin: auto;
+    padding: 0px;
+  }
+  .temperature{
+    color: color($colors, light);
+    font-weight: bold;
+    font-size: 150%;
+  }
+
+  .item{
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .toast{
+    background-color: color($colors, light);
+    color: color($colors, danger);
+  }
 }

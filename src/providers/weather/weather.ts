@@ -24,13 +24,13 @@ export class WeatherProvider {
     // });
     return this.http
       .get( this.url + 'lat=' + latitude + '&lon=' + longitude)
-      .map(res=> res);
+      .map(res=> res.data);
   }
 
   getWeatherByCity(city){
     return this.http
       .get( this.url + 'city=' + city)
-      .map(res=> res);
+      .map(res=> res.data);
     }
 
 

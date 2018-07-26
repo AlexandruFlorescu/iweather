@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { WeatherProvider } from '../../providers/weather/weather';
+import { ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -14,8 +15,9 @@ export class HomePage {
     longitude:any,
   };
   city: any;
+  error: any;
 
-  constructor(public navCtrl: NavController, private weatherProvider:WeatherProvider) {
+  constructor(public navCtrl: NavController, private weatherProvider:WeatherProvider, private toastCtrl:ToastController) {
 
   }
 
@@ -24,18 +26,39 @@ export class HomePage {
       latitude: '38.123',
       longitude: '-78.543'
     }
-    this.city = 'Bucharest';
-    this.weather = {};
+    this.city = 'Rome';
     // this.weatherProvider.getWeatherByCoords(this.coords.latitude, this.coords.longitude)
     // .subscribe(weather => {
-    //   this.weather = weather.data[0];
+    //   this.weather = weather[0];
     //   console.log(this.weather);
     // });
     this.weatherProvider.getWeatherByCity(this.city)
     .subscribe(weather => {
-      this.weather = weather.data[0];
-      console.log(this.weather)
+      this.weather = weather[0];
+      console.log(this.weather);
     });
-    console.log(this.weather);
+  }
+
+  changeCity(){
+    if(this.city)
+      this.weatherProvider.getWeatherByCity(this.city)
+      .subscribe(weather => {
+        this.weather = weather[0];
+        this.error=null;
+        console.log(this.weather);
+      }, error=>
+      {this.error = error
+        let toast = this.toastCtrl.create({
+          message: error,
+          duration: 3000,
+          position: 'top',
+        });
+
+        toast.onDidDismiss(() => {
+          console.log('Dismissed toast');
+        });
+
+        toast.present();
+      });
   }
 }

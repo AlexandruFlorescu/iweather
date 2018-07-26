@@ -5,20 +5,48 @@
 </ion-header>
 
 <ion-content padding class='home'>
-  <h2>Welcome to IWeather!</h2>
   <ion-item>
     <ion-label color="primary" floating>City name</ion-label>
-    <ion-input></ion-input>
+    <ion-input class='input' [(ngModel)]="city" (input)='changeCity()'></ion-input>
   </ion-item>
 
-  <ion-grid>
+
+  <ion-grid *ngIf='weather'>
     <ion-row>
-      <ion-col width-50 offset-25>
-        <h2 class="location"> {{ weather }}</h2>
-        <div class="icon"><img src="https://www.weatherbit.io/static/img/icons/r01d.png" alt=""></div>
-        <!-- <h3 class="coords">Latitude: {{weather.lat}} && Longitude: {{weather.lon}}</h3> -->
+      <ion-col text-center>
+        <ion-card>
+          <ion-card-header>
+            <h1 class="location">
+              {{ weather.city_name }}, {{weather.country_code}}
+            </h1>
+          </ion-card-header>
+            <ion-card-content>
+              <div *ngIf='weather.weather' ><img class='icon' src="https://www.weatherbit.io/static/img/icons/{{weather.weather.icon}}.png" alt=""></div>
+              <h3 class="temperature">{{weather.app_temp}} C</h3>
+            </ion-card-content>
+          <ion-list >
+            <ion-item class='item'>
+                <strong>Dew point :</strong> {{weather.dewpt}} C
+            </ion-item>
+            <ion-item>
+                <strong>Cloud coverage :</strong> {{weather.clouds}} %
+            </ion-item>
+            <ion-item>
+                <strong>Pressure :</strong> {{weather.pres}} mb
+            </ion-item>
+            <ion-item *ngIf='weather.precip'>
+                <strong>Precipitations :</strong> {{weather.precip}} mm
+            </ion-item>
+            <ion-item *ngIf='weather.snow'>
+                <strong>Snow :</strong> {{weather.snow}} mm
+            </ion-item>
+          </ion-list>
+
+        </ion-card>
       </ion-col>
     </ion-row>
+
+
   </ion-grid>
 
 </ion-content>
